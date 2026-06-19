@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner DNI | Inicio</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="main-page">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-brand">Scanner DNI</div>
+        <div class="navbar-info">
+            <span id="nombreOperador"></span>
+            <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+
+        <!-- SECCIÓN ESCANEO -->
+        <section class="card" id="seccionEscaneo">
+    <h2>Escanear DNI</h2>
+    <p class="card-desc">Subí o fotografiá el frente y el dorso del DNI</p>
+
+    <div class="dni-sides">
+
+        <!-- FRENTE -->
+        <div class="dni-side" id="ladoFrente">
+            <h3>Frente</h3>
+            <div class="input-options">
+                <button class="btn-secondary btn-small" data-lado="frente" data-tipo="camara">
+                    📷 Cámara
+                </button>
+                <label class="btn-secondary btn-small" for="inputFrente">
+                    📁 Archivo
+                </label>
+                <input type="file" id="inputFrente" data-lado="frente" accept=".jpg,.jpeg,.png" style="display:none" />
+            </div>
+            <div class="preview-slot" id="previewFrente" style="display:none">
+                <img id="imgFrente" src="" alt="Frente DNI" />
+                <button class="btn-quitar" data-lado="frente">✕ Quitar</button>
+            </div>
+        </div>
+
+        <!-- DORSO -->
+        <div class="dni-side" id="ladoDorso">
+            <h3>Dorso</h3>
+            <div class="input-options">
+                <button class="btn-secondary btn-small" data-lado="dorso" data-tipo="camara">
+                    📷 Cámara
+                </button>
+                <label class="btn-secondary btn-small" for="inputDorso">
+                    📁 Archivo
+                </label>
+                <input type="file" id="inputDorso" data-lado="dorso" accept=".jpg,.jpeg,.png" style="display:none" />
+            </div>
+            <div class="preview-slot" id="previewDorso" style="display:none">
+                <img id="imgDorso" src="" alt="Dorso DNI" />
+                <button class="btn-quitar" data-lado="dorso">✕ Quitar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Cámara compartida (se usa para frente o dorso según corresponda) -->
+    <div class="camara-modal" id="camaraModal" style="display:none">
+        <video id="video" autoplay playsinline></video>
+        <div class="camara-actions">
+            <button class="btn-primary" id="btnCapturar">Capturar foto</button>
+            <button class="btn-secondary" id="btnCerrarCamara">Cancelar</button>
+        </div>
+    </div>
+    <canvas id="canvas" style="display:none"></canvas>
+
+    <button class="btn-primary" id="btnEscanear" disabled>
+        🔍 Escanear DNI
+    </button>
+
+    <!-- Loading -->
+    <div class="loading" id="loading" style="display:none">
+        <div class="spinner"></div>
+        <p>Analizando DNI con IA...</p>
+    </div>
+
+</section>
+
+        <!-- SECCIÓN FORMULARIO -->
+        <section class="card" id="seccionFormulario" style="display:none">
+            <h2>Datos del DNI</h2>
+            <p class="card-desc">Revisá los datos extraídos y corregí si es necesario</p>
+
+            <form id="formInscripcion">
+                <input type="hidden" id="escaneo_id" />
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dni_numero">Número de DNI</label>
+                        <input type="text" id="dni_numero" name="dni_numero" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexo">Sexo</label>
+                        <input type="text" id="sexo" name="sexo" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cuil">CUIL</label>
+                        <input type="text" id="cuil" name="cuil" />
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="domicilio">Domicilio</label>
+                        <input type="text" id="domicilio" name="domicilio" />
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="btnCancelar">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-primary" id="btnConfirmar">
+                        ✅ Confirmar inscripción
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- SECCIÓN ÉXITO -->
+        <section class="card" id="seccionExito" style="display:none">
+            <div class="exito-container">
+                <div class="exito-icon">✅</div>
+                <h2>Inscripción confirmada</h2>
+                <p>Los datos fueron guardados correctamente</p>
+                <button class="btn-primary" id="btnNuevoEscaneo">
+                    Nuevo escaneo
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="assets/js/camara.js"></script>
+    <script src="assets/js/formulario.js"></script>
+
+</body>
+</html>
